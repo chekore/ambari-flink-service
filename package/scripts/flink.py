@@ -52,12 +52,12 @@ class Master(Script):
             self.install_packages(env)
 
             Execute('echo Compiling Flink from source')
-            Execute("git clone https://github.com/apache/flink.git %s/git >> %s" %
+            Execute("git clone https://github.com/apache/flink.git %s >> %s" %
                     (params.flink_install_dir, params.flink_log_file))
-            Execute("cd %s/git; git checkout release-1.8" % params.flink_install_dir)
-            Execute("cd %s/git; mvn clean install -DskipTests -Dhadoop.version=3.1.1 -Pvendor-repos >> %s " %
+            Execute("cd %s; git checkout release-1.8" % params.flink_install_dir)
+            Execute("cd %s; mvn clean install -DskipTests -Dhadoop.version=3.1.1 -Pvendor-repos >> %s " %
                     (params.flink_install_dir, params.flink_log_file))
-            Execute("mv %s/git/build-target/* %s/" % (params.flink_install_dir, params.flink_install_dir))
+            # Execute("mv %s/git/build-target/* %s/" % (params.flink_install_dir, params.flink_install_dir))
             Execute('chown -R ' + params.flink_user + ':' + params.flink_group + ' ' + params.flink_install_dir)
 
             # update the configs specified by user
@@ -73,7 +73,7 @@ class Master(Script):
 
         # write out nifi.properties
         properties_content = InlineTemplate(params.flink_yaml_content)
-        File("%s/conf/flink-conf.yaml" % params.flink_install_dir, content=properties_content, owner=params.flink_user)
+        File("%s/flink-conf.yaml" % params.conf_dir, content=properties_content, owner=params.flink_user)
 
     def stop(self, env):
         import params
@@ -95,7 +95,7 @@ class Master(Script):
         Execute('echo bin dir ' + params.bin_dir)
         Execute('echo pid file ' + status_params.flink_pid_file)
         cmd = format(
-            "export HADOOP_CONF_DIR={hadoop_conf_dir}; {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {flink_numberoftaskslots} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+            "export HADOOP_CLASSPATH=`hadoop classpath` && {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {flink_numberoftaskslots} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
         if params.flink_streaming:
             cmd = cmd + ' -st '
         Execute(cmd + format(" >> {flink_log_file}"), user=params.flink_user)
