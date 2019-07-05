@@ -114,7 +114,7 @@ state.backend: jobmanager
 #
 # fs.hdfs.hadoopconf: /path/to/hadoop/conf/
 fs.hdfs.hadoopconf: /etc/hadoop/conf/
-env.java.home: /usr/lib/jvm/java-8-openjdk-amd64
+env.java.home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.101-3.b13.el7_2.x86_64
 taskmanager.memory.fraction: 0.6
 env.java.opts: -XX:+UseG1GC
   </value>

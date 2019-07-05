@@ -95,7 +95,7 @@ class Master(Script):
         Execute('echo bin dir ' + params.bin_dir)
         Execute('echo pid file ' + status_params.flink_pid_file)
         cmd = format(
-            "export HADOOP_CLASSPATH=`hadoop classpath` && {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {flink_numberoftaskslots} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
+            "export HADOOP_CONF_DIR={hadoop_conf_dir} && export HADOOP_CLASSPATH=`hadoop classpath` && {bin_dir}/yarn-session.sh -n {flink_numcontainers} -s {flink_numberoftaskslots} -jm {flink_jobmanager_memory} -tm {flink_container_memory} -qu {flink_queue} -nm {flink_appname} -d")
         if params.flink_streaming:
             cmd = cmd + ' -st '
         Execute(cmd + format(" >> {flink_log_file}"), user=params.flink_user)
