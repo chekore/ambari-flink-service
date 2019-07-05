@@ -7,7 +7,7 @@
 
   <property>
     <name>flink_install_dir</name>
-    <value>/opt/flink</value>
+    <value>/usr/hdp/current/flink</value>
     <description>Location to install Flink</description>
   </property> 
 
