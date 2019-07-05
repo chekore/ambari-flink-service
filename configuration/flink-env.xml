@@ -1,35 +1,28 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-
 <configuration>
-
   <property>
     <name>flink_log_dir</name>
     <value>/var/log/flink</value>    
     <description>flink Log dir</description>
   </property> 
-
- <property>
+  <property>
     <name>flink_pid_dir</name>
     <value>/var/run/flink</value>
     <description>Dir containing process ID file</description>
   </property>
-
   <property>
     <name>flink_user</name>
     <value>flink</value>
     <property-type>USER</property-type>
     <description>User flink daemon runs as</description>
-  </property> 
-        
+  </property>
   <property>
     <name>flink_group</name>
     <value>flink</value>
     <property-type>GROUP</property-type>
     <description>flink group</description>
-  </property> 
-          
-            
+  </property>
   <property>
     <name>content</name>
     <value>
@@ -287,10 +280,8 @@ parallelism.default: 1
 
 # Interval in milliseconds for refreshing the monitored directories.
 #historyserver.archive.fs.refresh-interval: 10000
-  </value>
-  <description>Template for flink-conf.yaml</description>
-  
+    </value>
+    <description>Template for flink-conf.yaml</description>
   </property>
-
 </configuration>
 
